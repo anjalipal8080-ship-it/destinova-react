@@ -125,8 +125,8 @@ function App() {
             ].map((dest, index) => (
               <div key={index} className="group cursor-pointer">
                 <div className="relative overflow-hidden rounded-xl">
-                  <img 
-                    src={`/images/${dest.img}`} 
+                  <img
+                    src={`/images/${dest.img}`}
                     alt={dest.name}
                     className="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-300"
                   />
@@ -231,12 +231,11 @@ function App() {
           </div>
           <div className="h-96 overflow-y-auto p-4 space-y-4">
             {messages.map((msg, idx) => (
-              <div key={idx} 
-                className={`p-3 rounded-lg max-w-[80%] ${
-                  msg.from === "bot" 
-                    ? "bg-gray-100 mr-auto" 
-                    : "bg-blue-500 text-white ml-auto"
-                }`}>
+              <div key={idx}
+                className={`p-3 rounded-lg max-w-[80%] ${msg.from === "bot"
+                  ? "bg-gray-100 mr-auto"
+                  : "bg-blue-500 text-white ml-auto"
+                  }`}>
                 {msg.text}
               </div>
             ))}
@@ -257,12 +256,151 @@ function App() {
           </form>
         </div>
       )}
-      <button 
+      <button
         className="fixed bottom-6 right-6 w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center text-2xl shadow-lg hover:bg-blue-600 transition-colors"
         onClick={toggleChat}
       >
         💬
       </button>
+
+      {/* Blogs Section */}
+      <section className="blogs px-4 py-8">
+        <h2 className="text-2xl font-bold mb-6 text-center">Our Blogs</h2>
+        <div className="blog-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="blog-card bg-white shadow-md p-4 rounded-lg hover:shadow-lg transition">
+            <h3 className="text-lg font-semibold mb-2">Let's travel beautifully</h3>
+            <p className="text-blue-500 cursor-pointer">Read More</p>
+          </div>
+          <div className="blog-card bg-white shadow-md p-4 rounded-lg hover:shadow-lg transition">
+            <h3 className="text-lg font-semibold mb-2">The beauty of Bali beaches</h3>
+            <p className="text-blue-500 cursor-pointer">Read More</p>
+          </div>
+          <div className="blog-card bg-white shadow-md p-4 rounded-lg hover:shadow-lg transition">
+            <h3 className="text-lg font-semibold mb-2">Temple Japan</h3>
+            <p className="text-blue-500 cursor-pointer">Read More</p>
+          </div>
+          <div className="blog-card bg-white shadow-md p-4 rounded-lg hover:shadow-lg transition">
+            <h3 className="text-lg font-semibold mb-2">Moments under Eiffel Tower</h3>
+            <p className="text-blue-500 cursor-pointer">Read More</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="newsletter px-4 py-8 bg-gray-100">
+        <h2 className="text-2xl font-bold mb-4 text-center">Our Newsletter</h2>
+        <form className="newsletter-form flex flex-col sm:flex-row items-center justify-center gap-4">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            className="px-4 py-2 border border-gray-300 rounded-md w-full sm:w-1/2"
+          />
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition"
+          >
+            Subscribe
+          </button>
+        </form>
+      </section>
+
+      {/* Mini Location Picker */}
+      <section className="mini-map-section px-4 py-8">
+        <h2 className="text-2xl font-bold mb-4 text-center">Choose Location</h2>
+        <div
+          id="miniMap"
+          className="w-full h-64 bg-gray-200 rounded-md mb-4"
+        ></div>
+        <p id="mini-location-display" className="text-center text-gray-700">
+          📍 Selected: None
+        </p>
+      </section>
+
+
+
+      {/* Reviews Section */}
+      <section className="reviews-flipkart px-4 py-8 bg-gray-50">
+        <h2 className="text-2xl font-bold mb-6 text-center">Ratings & Reviews</h2>
+
+        {/* Rating Summary */}
+        <div className="rating-summary flex flex-col md:flex-row justify-between items-center mb-8">
+          <div className="avg-rating text-center mb-4 md:mb-0">
+            <h1 className="text-4xl font-bold text-yellow-500">4.5★</h1>
+            <p className="text-gray-600">2,345 Ratings & 567 Reviews</p>
+          </div>
+          <div className="rating-bars space-y-2 w-full md:w-2/3">
+            {[{ star: 5, percent: 70 }, { star: 4, percent: 20 }, { star: 3, percent: 5 }, { star: 2, percent: 3 }, { star: 1, percent: 2 }].map(({ star, percent }) => (
+              <div key={star} className="flex items-center gap-2">
+                <span className="w-12">{star} ★</span>
+                <div className="bar bg-gray-300 h-4 w-full rounded">
+                  <div className="bg-yellow-400 h-4 rounded" style={{ width: `${percent}%` }}></div>
+                </div>
+                <span className="w-12 text-right">{percent}%</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* User Reviews */}
+        <div className="user-reviews space-y-6 mb-8">
+          {[
+            {
+              name: "Riya Sharma",
+              rating: "★★★★★",
+              text: "Amazing stay experience! Everything was well planned and easy.",
+              date: "Aug 20, 2025",
+            },
+            {
+              name: "Arjun Patel",
+              rating: "★★★★☆",
+              text: "Good service and hotel options. Could improve search speed.",
+              date: "Aug 18, 2025",
+            },
+            {
+              name: "Neha Verma",
+              rating: "★★★★★",
+              text: "Loved the recommendations for restaurants and homestays!",
+              date: "Aug 15, 2025",
+            },
+          ].map((review, index) => (
+            <div key={index} className="review-item bg-white p-4 rounded shadow">
+              <h3 className="text-lg font-semibold">
+                {review.name} <span className="text-yellow-500">{review.rating}</span>
+              </h3>
+              <p className="review-text text-gray-700 mt-2">"{review.text}"</p>
+              <span className="review-date text-sm text-gray-500 block mt-1">
+                Reviewed on {review.date}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Write a Review */}
+        <div className="write-review bg-white p-6 rounded shadow">
+          <h3 className="text-xl font-bold mb-4">Write a Review</h3>
+          <form className="space-y-4">
+            <label className="block font-medium">Rate this service:</label>
+            <div className="star-rating flex gap-2 text-yellow-500 text-xl">
+              {[5, 4, 3, 2, 1].map((star) => (
+                <div key={star}>
+                  <input type="radio" name="rating" id={`star-${star}`} value={star} className="hidden" />
+                  <label htmlFor={`star-${star}`} className="cursor-pointer">★</label>
+                </div>
+              ))}
+            </div>
+            <textarea
+              placeholder="Write your review here..."
+              className="w-full border border-gray-300 rounded p-2"
+            ></textarea>
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition"
+            >
+              Submit Review
+            </button>
+          </form>
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
