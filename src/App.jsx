@@ -1,4 +1,5 @@
 // src/App.jsx
+import './index.css';
 import { useState, useEffect } from "react";
 
 function App() {
