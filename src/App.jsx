@@ -1,5 +1,5 @@
 // src/App.jsx
-import './index.css';
+import "./index.css";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -9,6 +9,33 @@ function App() {
     { from: "bot", text: "👋 Hello! How can I help you with your travel plans?" },
   ]);
   const [userInput, setUserInput] = useState("");
+
+  // Destination state
+  const [destinations, setDestinations] = useState([]);
+
+  // ✅ Form state for location/date/people
+  const [formData, setFormData] = useState({
+    location: "",
+    date: "",
+    people: 1,
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Fetch destinations from Django backend
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/destinations/")
+      .then((r) => r.json())
+      .then((data) => {
+        console.log("Fetched destinations:", data);
+        window.destinations = data;
+        setDestinations(data);
+      })
+      .catch(console.error);
+  }, []);
+
 
   // Handle sending message
   const sendMessage = (e) => {
@@ -35,31 +62,59 @@ function App() {
 
   return (
     <div className="App">
-
       {/* Hero Section */}
-      <header className="relative bg-gray-900 text-white">
+      <header className="hero">
         <nav className="container mx-auto px-4 py-6 flex items-center justify-between">
-          <div className="text-2xl font-bold">Destinova</div>
+          <div className="text-2xl font-bold text-white">Destinova</div>
           <ul className="hidden md:flex space-x-8">
-            <li><a href="#" className="hover:text-gray-300">Home</a></li>
-            <li><a href="#" className="hover:text-gray-300">Tours</a></li>
-            <li><a href="#" className="hover:text-gray-300">Blog</a></li>
-            <li><a href="#" className="hover:text-gray-300">Contact</a></li>
+            <li><a href="#" className="hover:text-gray-300 text-white">Home</a></li>
+            <li><a href="#" className="hover:text-gray-300 text-white">Tours</a></li>
+            <li><a href="#" className="hover:text-gray-300 text-white">Blog</a></li>
+            <li><a href="#" className="hover:text-gray-300 text-white">Contact</a></li>
           </ul>
-          <button className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-full">Login</button>
+          <button className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-full text-white">Login</button>
         </nav>
-        <div className="container mx-auto px-4 py-20 text-center">
-          <h1 className="text-5xl font-bold mb-8">Enjoy the holidays with Destinova</h1>
-          <form className="max-w-4xl mx-auto flex flex-wrap gap-4 justify-center items-center">
-            <input type="text" placeholder="Location" className="p-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <input type="date" className="p-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <select className="p-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option>People</option>
-              {[...Array(10)].map((_, i) => (
-                <option key={i}>{i + 1}</option>
+
+        <div className="container mx-auto px-4 py-20 text-center relative z-10">
+          <h1 className="text-6xl font-extrabold mb-6 text-white drop-shadow-lg">
+            Enjoy the <span className="text-yellow-300">Holidays</span> with Destinova
+          </h1>
+          <p className="text-lg md:text-2xl mb-10 text-gray-200 opacity-90">
+            Discover amazing destinations and plan your perfect getaway ✈️ 🌍
+          </p>
+
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="max-w-4xl mx-auto flex flex-wrap gap-4 justify-center items-center bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-xl"
+          >
+            <input
+              type="text"
+              placeholder="Location"
+              className="p-3 w-40 rounded-lg border text-black focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            />
+            <input
+              type="date"
+              className="p-3 w-40 rounded-lg border text-black focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+            />
+            <select
+              className="p-3 w-32 rounded-lg border text-black focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              defaultValue=""
+            >
+              <option value="" disabled>
+                People
+              </option>
+              {Array.from({ length: 10 }, (_, i) => (
+                <option key={i} value={i + 1}>
+                  {i + 1}
+                </option>
               ))}
             </select>
-            <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg">Explore Now</button>
+            <button
+              type="submit"
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 rounded-lg font-semibold shadow-lg transform hover:scale-105 transition"
+            >
+              Explore Now
+            </button>
           </form>
         </div>
       </header>
